@@ -16,4 +16,4 @@ Here are some ideas to get you started:
 -->
 
 
-![Snake animation](https://raw.githubusercontent.com/SudoBrunoGomes/SudoBrunoGomes/output/output/snake.svg)
+
