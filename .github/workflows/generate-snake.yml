@@ -10,11 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          persist-credentials: true
+      - uses: actions/checkout@v4
 
       - name: Generate snake animation
         uses: Platane/snk@v3
@@ -22,30 +18,11 @@ jobs:
           github_user_name: ${{ github.repository_owner }}
           outputs: dist/snake.svg
 
-      - name: Prepare output folder
-        run: |
-          mkdir -p output
-          cp dist/snake.svg output/snake.svg
-
-      - name: Create output branch if it doesn't exist
-        run: |
-          git fetch origin
-          if ! git rev-parse --verify origin/output; then
-            echo "Branch output does not exist. Creating..."
-            git checkout -b output
-            git push origin output
-          fi
-
-      - name: Switch to output branch
-        run: |
-          git checkout output
-
-      - name: Copy updated snake to branch
-        run: |
-          cp output/snake.svg snake.svg
-
       - name: Commit and push
         run: |
+          cp dist/snake.svg snake.svg
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
           git add snake.svg
-          git commit -m "Update snake animation" || echo "No changes to commit"
-          git push origin output
+          git commit -m "Update snake animation" || echo "No changes"
+          git push
