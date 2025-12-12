@@ -15,5 +15,6 @@ Here are some ideas to get you started:
 - ⚡ Fun fact: ...
 -->
 
+![Snake animation](https://raw.githubusercontent.com/<SudoBrunoGomes>/<SudoBrunoGomes>/output/snake.svg)
 
 ![Snake animation](https://github.com/SudoBrunoGomes)
