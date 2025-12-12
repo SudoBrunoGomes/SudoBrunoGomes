@@ -22,14 +22,15 @@ jobs:
           github_user_name: ${{ github.repository_owner }}
           outputs: dist/snake.svg
 
-      - name: Create output folder and move file
+      - name: Prepare output folder
         run: |
           mkdir -p output
           cp dist/snake.svg output/snake.svg
 
-      - name: Commit and push to output branch
+      - name: Commit and push snake.svg
         uses: EndBug/add-and-commit@v9
         with:
-          add: 'output/snake.svg'
-          message: "Update snake animation"
-          branch: output
+          add: "output/snake.svg"
+          message: "Update snake"
+          push: true
+          new_branch: "output"
