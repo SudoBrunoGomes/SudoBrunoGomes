@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -27,10 +27,25 @@ jobs:
           mkdir -p output
           cp dist/snake.svg output/snake.svg
 
-      - name: Commit and push snake.svg
-        uses: EndBug/add-and-commit@v9
-        with:
-          add: "output/snake.svg"
-          message: "Update snake"
-          push: true
-          new_branch: "output"
+      - name: Create output branch if it doesn't exist
+        run: |
+          git fetch origin
+          if ! git rev-parse --verify origin/output; then
+            echo "Branch output does not exist. Creating..."
+            git checkout -b output
+            git push origin output
+          fi
+
+      - name: Switch to output branch
+        run: |
+          git checkout output
+
+      - name: Copy updated snake to branch
+        run: |
+          cp output/snake.svg snake.svg
+
+      - name: Commit and push
+        run: |
+          git add snake.svg
+          git commit -m "Update snake animation" || echo "No changes to commit"
+          git push origin output
